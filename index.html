@@ -1,0 +1,277 @@
+[media pointer="file-service://file-9UsD4D5J3f7HUUoxkeNVnJ"]
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portofolio Fakhriel yusmana shiddiq</title> jadi sebenernya saya melakukannya tetap gagal seperti buat new file di vscode dan apakah saya salah buat file folder di pisah dengan html 
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .navbar {
+      background-color: #2c3e50;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+    .logo-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      margin-right: 10px;
+    }
+    .logo {
+      color: #ecf0f1;
+      font-size: 1.5rem;
+    }
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .menu-toggle div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+    }
+    .nav-links {
+      list-style: none;
+      position: absolute;
+      top: 70px;
+      right: 20px;
+      background-color: #2c3e50;
+      border-radius: 8px;
+      display: none;
+      flex-direction: column;
+      padding: 1rem;
+      z-index: 1000;
+    }
+    .nav-links a {
+      color: #ecf0f1;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .nav-active {
+      display: flex;
+    }
+    header, section {
+      padding: 2rem;
+      text-align: center;
+    }
+    #hero {
+      background-color: #e4f1fe;
+      padding: 3rem 1rem;
+    }
+    .project, .testimonial {
+      margin: 1rem auto;
+      max-width: 600px;
+      background-color: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .project img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .skills-list {
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+      margin-bottom: 30px;
+      font-family: sans-serif;
+      color:#333; 
+      letter-spacing: 1px;
+    }
+    .skills-section {
+      border-bottom: 2px solid #ccc;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      padding-bottom: 1rem;
+    }
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    input, textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      padding: 10px;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    footer {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+    @media (min-width: 768px) {
+      .menu-toggle {
+        display: none;
+      }
+      .nav-links {
+        position: static;
+        display: flex !important;
+        flex-direction: row;
+        background: none;
+        padding: 0;
+      }
+      .nav-links a {
+        margin: 0 10px;
+      }
+    }
+    @media (max-width: 767px) {
+      .menu-toggle {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo-container">
+        <img src="logo.JPEG" alt="Logo">
+        <h1 class="logo">Ariel</h1>
+      </div>
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="nav-links" id="navMenu">
+        <li><a href="#about">Tentangku</a></li>
+        <li><a href="#skills">Keahlian</a></li>
+        <li><a href="#projects">Proyek</a></li>
+        <li><a href="#testimonial">Testimoni</a></li>
+        <li><a href="#contact">Kontak</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="hero">
+    <h2>Selamat Datang di Portofolio Saya</h2>
+    <p>Saya Ariel — Web3, Data Entry, dan Copywriter pemula yang siap berkembang!</p>
+  </section>
+
+  <section id="about">
+    <h2>Tentang Saya</h2>
+    <p>Saya adalah seorang pemula yang sedang mempelajari Web3, Data Entry, dan Copywriting. Saya memiliki semangat besar untuk belajar dan berkembang di bidang teknologi dan digital.</p>
+  </section>
+
+  <section id="Keahlian">
+    <p class="skill-list">Web3 | Data entry | Copywriter | Chatbot Ai</p>
+  </section>
+
+  <section id="projects">
+    <h2>Proyek Saya</h2>
+    <div class="project">
+      <h3>Proyek 1</h3>
+      <a href="https://github.com/ariel/proyek1" target="_blank">
+        <img src="proyek1.png" alt="Screenshot Proyek 1">
+      </a>
+      <p>Ini adalah contoh proyek ke-1 saya. Klik gambar untuk melihat lebih lanjut</p>
+    </div>
+    <div class="project">
+      <h3>Proyek 2</h3>
+      <a href="https://github.com/ariel/proyek2" target="_blank">
+        <img src="proyek2.png" alt="Screenshot Proyek 2">
+      </a>
+      <p>Ini adalah contoh proyek ke-2 saya. Klik gambar untuk melihat lebih lanjut.</p>
+    </div>
+    <div class="project">
+      <h3>Proyek 3</h3>
+      <a href="https://github.com/ariel/proyek3" target="_blank">
+        <img src="proyek3.png" alt="Screenshot Proyek 3">
+      </a>
+      <p>Ini adalah contoh proyek ke-3 saya. Klik gambar untuk melihat lebih lanjut.</p>
+    </div>
+    <div class="project">
+      <h3>Proyek 4</h3>
+      <a href="https://github.com/ariel/proyek4" target="_blank">
+        <img src="proyek4.png" alt="Screenshot Proyek 4">
+      </a>
+      <p>Ini adalah contoh proyek ke-4 saya. Klik gambar untuk melihat lebih lanjut.</p>
+    </div>
+  </section>
+
+  <section id="testimonial">
+    <h2>Testimoni</h2>
+    <p>Silakan isi testimoni Anda di bawah ini:</p>
+    <form onsubmit="return submitTestimoni(event)">
+      <input type="text" id="namaTesti" placeholder="Nama Anda" required>
+      <textarea id="pesanTesti" placeholder="Tulis testimoni Anda di sini..." required></textarea>
+      <button type="submit">Kirim Testimoni</button>
+    </form>
+    <div id="daftarTestimoni"></div>
+  </section>
+
+  <section id="contact">
+    <h2>Kontak</h2>
+    <p>Hubungi saya di WhatsApp: <strong>+62 878-0971-5422</strong></p>
+    <form onsubmit="return kirimForm(event)">
+      <input type="text" placeholder="Nama" required>
+      <input type="email" placeholder="Email" required>
+      <textarea placeholder="Pesan" required></textarea>
+      <button type="submit">Kirim</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Fakhriel Yusmana Shiddiq.</p>
+  </footer>
+
+  <script>
+    function kirimForm(event) {
+      event.preventDefault();
+      alert("Terima kasih, pesan Anda sudah terkirim!");
+    }
+    function toggleMenu() {
+      const menu = document.getElementById('navMenu');
+      menu.classList.toggle('nav-active');
+    }
+    function submitTestimoni(event) {
+      event.preventDefault();
+      const nama = document.getElementById('namaTesti').value;
+      const pesan = document.getElementById('pesanTesti').value;
+      if (nama && pesan) {
+        const testiContainer = document.getElementById('daftarTestimoni');
+        const elemenTesti = document.createElement('div');
+        elemenTesti.classList.add('testimonial');
+        elemenTesti.innerHTML = `<p><strong>${nama}</strong>: ${pesan}</p>`;
+        testiContainer.appendChild(elemenTesti);
+        document.getElementById('namaTesti').value = '';
+        document.getElementById('pesanTesti').value = '';
+      }
+    }
+  </script>
+</body>
+</html>
