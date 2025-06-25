@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeMoment - Photography</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    .signature-container {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    
+    #signatureCanvas {
+      border: 1px solid #dee2e6;
+      background-color: #fff;
+      cursor: crosshair;
+      width: 100%;
+      max-width: 400px;
+    }
+    
+    .clear-signature {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1;
+    }
+
+    .alert {
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid transparent;
+      border-radius: 0.25rem;
+      font-size: 1rem;
+    }
+
+    .alert-success {
+      color: #0f5132;
+      background-color: #d1e7dd;
+      border-color: #badbcc;
+    }
+
+    .alert-danger {
+      color: #b31a26;
+      background-color: #f8d7da;
+      border-color: #f5c2c7;
+    }
+
+    .spinner-border {
+      width: 1rem;
+      height: 1rem;
+      border-width: 0.2em;
+    }
+
+    .book-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #be1515;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+      font-size: 16px;
+    }
+
+    .book-button:hover {
+      background-color: #ff5151;
+    }
+
+    .like-button-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+
+    .btn-like {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .btn-like .fa-heart {
+      color: #ff4444;
+      font-size: 24px;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-like:hover .fa-heart {
+      transform: scale(1.1);
+    }
+
+    #likesCount {
+      font-size: 14px;
+      margin-top: 5px;
+      color: #ffffff;
+    }
+
+    .like-animation {
+      animation: likeEffect 0.5s ease;
+    }
+
+    @keyframes likeEffect {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body class="bg-dark">
+  <!-- Navbar dengan SVG Kamera Multi-Warna -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center fw-bold fs-3" href="#">
+        <svg width="38" height="38" viewBox="2 0 32 32">
+          <g>
+            <!-- Badan Kamera -->
+            <path fill="#343a40" d="M4 6h24a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/>
+            
+            <!-- Lensa Utama -->
+            <circle cx="16" cy="16" r="8" fill="#495057"/>
+            
+            <!-- Cincin Lensa -->
+            <circle cx="16" cy="16" r="6" fill="#212529"/>
+            
+            <!-- Highlight Lensa -->
+            <circle cx="18" cy="14" r="1.5" fill="#fff" fill-opacity="0.6"/>
+            
+            <!-- Aksen Merah -->
+            <path d="M6 24h20" stroke="#dc3545" stroke-width="2" stroke-linecap="round"/>
+            
+            <!-- Animasi Goyang -->
+            <animateTransform 
+              attributeName="transform"
+              type="rotate"
+              values="0; -1; 0; 1; 0"
+              dur="0.4s"
+              repeatCount="indefinite"
+              additive="sum"
+              calcMode="discrete"
+            />
+          </g>
+        </svg>
+        TeMoment
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link fw-semibold" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="#portfolio">Portfolio</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="booking_list.php">Booking List</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="#book-now">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+        <div class="hero-header">
+            <h1>Capturing Beautiful Moments.</h1>
+            <p class="subtitle">Preserve Your Precious Moments With TeMoment</p>
+            <a class="book-button" href="#book-now">Book Session</a>
+        </div>
+
+        <div class="hero-bottom">
+            <!-- Category Tags di kiri bawah -->
+            <div class="category-tags">
+                <span class="tag">Landscape</span>
+                <span class="tag">Wildlife</span>
+                <span class="tag">Architectural</span>
+                <span class="tag">Travel</span>
+                <span class="tag">Portrait</span>
+            </div>
+
+            <!-- Project Carousel di kanan -->
+            <div class="project-carousel">
+                <div class="project-boxes">
+                    <div class="project-box">
+                        <img src="img/foto 7.png" alt="Project 1">
+                        <div class="project-info">
+                            <h3>Lonely Life at the Baltimore</h3>
+                            <p>Shoot with Sony a5000</p>
+                        </div>
+                    </div>
+                    <div class="project-box">
+                        <img src="img/foto1.png" alt="Project 2">
+                        <div class="project-info">
+                            <h3>A Symphony by the Sea</h3>
+                            <p>Shoot with Canon EOS</p>
+                        </div>
+                    </div>
+                    <div class="project-box">
+                        <img src="img/foto 5.png" alt="Project 3">
+                        <div class="project-info">
+                            <h3>Mountain Adventure</h3>
+                            <p>Shoot with Nikon D850</p>
+                        </div>
+                    </div>
+                </div>             
+                <!-- Dots -->
+                <div class="carousel-dots">
+                    <span class="carousel-dot active"></span>
+                    <span class="carousel-dot"></span>
+                    <span class="carousel-dot"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- Carousel -->
+  <section class="container my-5">
+    <div id="photoCarousel" class="carousel slide shadow-lg" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#photoCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#photoCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#photoCarousel" data-bs-slide-to="2"></button>
+      </div>
+      <div class="carousel-inner rounded-3">
+        <div class="carousel-item active">
+          <img src="img/carousel 1.png" class="d-block w-100" alt="Photo 1">
+          <div class="carousel-caption bg-dark bg-opacity-75 rounded-pill">
+            <h5>Capture Your Best Moments</h5>
+            <p>Shot with Sony ZV-E10</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="img/carousel 2.png" class="d-block w-100" alt="Photo 2">
+          <div class="carousel-caption bg-dark bg-opacity-75 rounded-pill">
+            <h5>A Javanese Traditional</h5>
+            <p>Shot with Sony ZV-E10</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="img/carousel 3.png" class="d-block w-100" alt="Photo 3">
+          <div class="carousel-caption bg-dark bg-opacity-75 rounded-pill">
+            <h5>You Can Defeat Me?</h5>
+            <p>Shot with Sony ZV-E10</p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#photoCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#photoCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="py-5 bg-black" id="about">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 mb-4">
+          <h2 class="display-4 text-white fw-bold">We're <span class="text-danger">TeMoment</span></h2>
+          <div class="d-flex gap-2 my-4">
+            <span class="badge bg-danger">Photography</span>
+            <span class="badge bg-danger">Videography</span>
+            <span class="badge bg-danger">Editing</span>
+          </div>
+          <p class="text-white-50 lead">8+ years experience in professional photography based in Jakarta, Indonesia.</p>
+        </div>
+        <div class="col-md-6">
+          <img src="img/Foto studio.png" class="img-fluid rounded-3 shadow" alt="Studio">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section class="portfolio-section" id="portfolio">
+    <div class="portfolio-title">
+      <h2>OUR PORTFOLIO</h2>
+    </div>
+    <div class="portfolio-grid">
+      <div class="portfolio-item">
+        <img src="img/foto 5.jpg" alt="Model with pink background">
+      </div>
+      <div class="portfolio-item">
+        <img src="img/foto 2.png" alt="Model with brown background">
+      </div>
+      <div class="portfolio-item">
+        <img src="img/foto 3.png]" alt="Model in orange sweater">
+      </div>
+      <div class="portfolio-item">
+        <img src="img/foto 6.png" alt="Portrait model">
+      </div>
+      <div class="portfolio-item">
+        <img src="img/foto1.png" alt="Smiling model">
+      </div>
+      <div class="portfolio-item">
+        <img src="img/foto 4.png" alt="Model with yellow background">
+      </div>
+      <div class="portfolio-item">
+        <img src="img/foto 7.png" alt="Model in jacket">
+      </div>
+    </div>
+  </section>
+
+  <!-- Like Button Section -->
+  <div class="like-button-container">
+    <button id="likeButton" class="btn btn-like">
+        <i class="fas fa-heart"></i>
+        <span id="likesCount">0</span>
+    </button>
+  </div>
+
+  <!-- Pastikan Font Awesome sudah ditambahkan di head jika belum ada -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
+  <!-- Tambahkan jQuery sebelum script kita -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+  $(document).ready(function() {
+    console.log('Document ready!'); // Debug log
+    
+    // Load initial like count
+    updateLikeCount();
+    
+    // Handle like button click
+    $('#likeButton').on('click', function(e) {
+        console.log('Like button clicked!'); // Debug log
+        e.preventDefault();
+        $.ajax({
+            url: 'like_post.php',
+            type: 'POST',
+            data: {
+                action: 'like'
+            },
+            dataType: 'json',
+            success: function(response) {
+                console.log('Add like response:', response); // Debug log
+                if (response.success) {
+                    $('#likesCount').text(response.likes);
+                    
+                    // Animate heart
+                    const heart = $('.fa-heart');
+                    heart.addClass('like-animation');
+                    setTimeout(() => {
+                        heart.removeClass('like-animation');
+                    }, 500);
+                    
+                    // Show +1 animation
+                    showPlusOne();
+                } else {
+                    console.error('Error:', response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Add like error:', error);
+            }
+        });
+    });
+  });
+
+  function updateLikeCount() {
+    $.ajax({
+        url: 'like_post.php',
+        type: 'POST',
+        data: {
+            action: 'get_count'
+        },
+        dataType: 'json',
+        success: function(response) {
+            console.log('Get count response:', response); // Debug log
+            if (response.success) {
+                $('#likesCount').text(response.likes);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Get count error:', error);
+        }
+    });
+  }
+
+  function showPlusOne() {
+    const plusOne = $('<div>')
+        .text('+1')
+        .css({
+            position: 'absolute',
+            right: '70px',
+            bottom: '40px',
+            color: '#ff4444',
+            fontSize: '18px',
+            fontWeight: 'bold',
+            opacity: 1,
+            transition: 'all 0.5s ease'
+        })
+        .appendTo('.like-button-container');
+
+    setTimeout(() => {
+        plusOne.css({
+            transform: 'translateY(-20px)',
+            opacity: 0
+        });
+        setTimeout(() => plusOne.remove(), 500);
+    }, 50);
+  }
+  </script>
+
+  <!-- Tambahkan SweetAlert2 untuk notifikasi yang lebih baik -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Contact Section -->
+  <section class="py-5 bg-black" id="book-now">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card bg-dark text-white shadow-lg">
+            <div class="card-body p-5">
+              <h2 class="text-center mb-4">Book Session</h2>
+              <!-- Notifikasi sukses/error -->
+              <div id="bookingNotification" class="alert" style="display: none;"></div>
+              
+              <form id="bookingForm" method="POST" action="process_booking.php">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Nama Lengkap</label>
+                  <input type="text" id="name" name="name" class="form-control bg-transparent text-white" placeholder="Masukkan nama lengkap anda" required>
+                </div>
+                <div class="mb-3">
+                  <label for="address" class="form-label">Alamat</label>
+                  <textarea id="address" name="address" class="form-control bg-transparent text-white" rows="2" placeholder="Masukkan alamat lengkap anda" required></textarea>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="phone" class="form-label">Nomor Telepon</label>
+                    <input type="text" id="phone" name="phone" class="form-control bg-transparent text-white" placeholder="Masukkan nomor telepon" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-control bg-transparent text-white" placeholder="Contoh: email@domain.com" required>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="sessionType" class="form-label">Jenis Sesi</label>
+                  <select id="sessionType" name="sessionType" class="form-control bg-transparent" style="color: rgb(255, 255, 255) !important;" required>
+                    <option value="" selected disabled style="color: rgb(255, 255, 255);">Pilih jenis sesi</option>
+                    <option value="prewedding" style="color: black;">Prewedding</option>
+                    <option value="wedding" style="color: black;">Wedding</option>
+                    <option value="family" style="color: black;">Family</option>
+                    <option value="event" style="color: black;">Event</option>
+                    <option value="product" style="color: black;">Product</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="sessionDate" class="form-label">Tanggal Sesi</label>
+                  <input type="date" id="sessionDate" name="sessionDate" class="form-control bg-transparent text-white" required>
+                </div>
+                <div class="mb-3">
+                  <label for="message" class="form-label">Pesan Tambahan</label>
+                  <textarea id="message" name="message" class="form-control bg-transparent text-white" rows="3" placeholder="Ceritakan lebih detail tentang kebutuhan anda"></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Tanda Tangan Reservasi</label>
+                    <div class="signature-container">
+                      <button type="button" class="btn btn-sm btn-outline-light clear-signature" id="clearSignature">
+                        <i class="bi bi-x-lg"></i> Clear
+                      </button>
+                      <canvas id="signatureCanvas" width="400" height="200" class="border rounded bg-white"></canvas>
+                    </div>
+                    <input type="hidden" name="signature" id="signatureData">
+                    <div class="form-text text-muted">
+                      Tanda tangan digital sebagai persetujuan reservasi.
+                    </div>
+                  </div>
+
+                <div class="form-check mb-4">
+                  <input class="form-check-input" type="checkbox" id="termsCheckbox" required>
+                  <label class="form-check-label" for="termsCheckbox">
+                    Saya menyetujui syarat dan ketentuan yang berlaku
+                  </label>
+                </div>
+  
+                <button type="submit" class="btn btn-danger w-100">Kirim Reservasi</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location & Contact Section - FIXED -->
+  <section class="py-5 bg-dark" id="location">
+    <div class="container">
+      <h2 class="text-center text-white mb-5">Find Us</h2>
+      <div class="row">
+        <!-- Map Column -->
+        <div class="col-lg-8 mb-4">
+          <div class="map-container shadow-lg rounded">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1179.3850510393736!2d106.53178957637833!3d-6.135721299440408!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e41ff338fc3da19%3A0x7e6b81ad138833a7!2sWarung%20Kuliner%20zaman%20now%20ala%20Bunda%20Dimas!5e0!3m2!1sen!2sid!4v1741405727845!5m2!1sen!2sid" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+
+        <!-- Social Media Column -->
+        <div class="col-lg-4">
+          <div class="text-white h-100">
+            <div class="card-body d-flex flex-column justify-content-center">
+              <h3 class="card-title mb-4">Follow Us</h3>
+              <div class="social-icons">
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none mb-4 fs-5">
+                  <i class="bi bi-instagram fs-4 me-3 text-danger"></i>
+                  <span>  TeMoment_Studio</span>
+                </a>
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none mb-4 fs-5">
+                  <i class="bi bi-facebook fs-4 me-3 text-primary"></i>
+                  <span>  TeMoment Studio Tangerang</span>
+                </a>
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none mb-4 fs-5">
+                  <i class="bi bi-whatsapp fs-4 me-3 text-success"></i>
+                  <span>  +62-858-9167-4034</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer - FIXED -->
+  <footer class="bg-black text-white py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h5 class="mb-0">TeMoment Studio</h5>
+          <p class="mb-0">&copy; 2024 TeMoment. All rights reserved</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        // Set canvas size
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            canvas.width = Math.min(400, container.offsetWidth);
+            canvas.height = 200;
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Set warna dan ketebalan garis
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+
+        function getMousePos(canvas, e) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+        }
+
+        function getTouchPos(canvas, e) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: e.touches[0].clientX - rect.left,
+                y: e.touches[0].clientY - rect.top
+            };
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const pos = getMousePos(canvas, e);
+            lastX = pos.x;
+            lastY = pos.y;
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            e.preventDefault();
+            
+            const pos = getMousePos(canvas, e);
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+            
+            lastX = pos.x;
+            lastY = pos.y;
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            document.getElementById('signatureData').value = canvas.toDataURL();
+        }
+
+        // Mouse Events
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        // Touch Events
+        canvas.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            const pos = getTouchPos(canvas, e);
+            lastX = pos.x;
+            lastY = pos.y;
+            isDrawing = true;
+        });
+
+        canvas.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+            if (!isDrawing) return;
+            
+            const pos = getTouchPos(canvas, e);
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+            
+            lastX = pos.x;
+            lastY = pos.y;
+        });
+
+        canvas.addEventListener('touchend', stopDrawing);
+
+        // Clear button
+        document.getElementById('clearSignature').addEventListener('click', function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('signatureData').value = '';
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('bookingForm');
+        const notification = document.getElementById('bookingNotification');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            try {
+                // Reset notifikasi
+                notification.style.display = 'none';
+                
+                // Validasi form
+                const formData = new FormData(this);
+                if (!validateForm(formData)) {
+                    return;
+                }
+
+                // Update tombol submit
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Mengirim...';
+                submitBtn.disabled = true;
+
+                // Kirim data
+                const response = await fetch('process_booking.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                // Tampilkan notifikasi
+                notification.style.display = 'block';
+                notification.className = `alert alert-${data.status === 'success' ? 'success' : 'danger'}`;
+                notification.innerHTML = data.message;
+
+                // Jika sukses, reset form
+                if (data.status === 'success') {
+                    form.reset();
+                    // Clear tanda tangan
+                    const canvas = document.getElementById('signatureCanvas');
+                    if (canvas) {
+                        const ctx = canvas.getContext('2d');
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    }
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                notification.style.display = 'block';
+                notification.className = 'alert alert-danger';
+                notification.innerHTML = 'Terjadi kesalahan sistem. Silakan coba beberapa saat lagi.';
+            } finally {
+                // Reset tombol submit
+                const submitBtn = this.querySelector('button[type="submit"]');
+                submitBtn.innerHTML = 'Kirim Reservasi';
+                submitBtn.disabled = false;
+
+                // Scroll ke notifikasi
+                notification.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+
+        // Fungsi validasi form
+        function validateForm(formData) {
+            const required = ['name', 'address', 'phone', 'email', 'sessionType', 'sessionDate'];
+            
+            for (const field of required) {
+                if (!formData.get(field)?.trim()) {
+                    showError(`Mohon isi ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+                    return false;
+                }
+            }
+
+            // Validasi email
+            const email = formData.get('email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('Format email tidak valid');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Fungsi menampilkan error
+        function showError(message) {
+            notification.style.display = 'block';
+            notification.className = 'alert alert-danger';
+            notification.innerHTML = message;
+            notification.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
+
+    // Tambahkan smooth scroll behavior
+    document.querySelector('.book-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('#book-now').scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+  </script>
+
+</body>
+</html>
